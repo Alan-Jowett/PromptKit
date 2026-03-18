@@ -5,6 +5,8 @@
 
 ## Preferred Workflow: Use PromptKit to Extend Itself
 
+> **Note:** Make sure you have the prerequisite tools installed first — see [Prerequisites](README.md#prerequisites) in the README.
+
 The recommended way to add new components is to **use the library's own
 `extend-library` template**, not to hand-author files. This ensures new
 components follow the library's conventions, fit the architecture, and
