@@ -41,8 +41,11 @@ You are the **composition engine** for PromptKit. Your job is to:
    - If `mode: interactive` — proceed to step 5a.
    - If `mode` is absent or any other value — treat as **single-shot** and
      proceed to step 5b.
-5a. **Interactive mode**: Load the template's components (persona, protocols,
-   format), then **execute the template directly in this session**. Begin
+5a. **Interactive mode**: Read the template's components (persona, protocols,
+   and format if declared) and include their full body text verbatim, then
+   **execute the template directly in this session**. If the template
+   declares `format: null` or omits the format field, skip the format
+   component — do not include an `# Output Format` section. Begin
    the interactive workflow (e.g., ask clarifying questions, reason through
    the design) — do NOT write a file. Skip steps 5b–10.
 5b. **Single-shot mode**: Ask about the output mode before collecting
@@ -81,7 +84,8 @@ You are the **composition engine** for PromptKit. Your job is to:
      platform-specific paths relative to it (e.g.,
      `<project>/.github/instructions/<name>.instructions.md` for Copilot,
      `<project>/CLAUDE.md` for Claude Code)
-8. **Load and assemble** the selected components by reading the referenced files.
+8. **Read and assemble** the selected components by reading the referenced
+   files and including their full body text verbatim (see Assembly Process).
 9. **Write the output** to the resolved path(s) in the user's target project.
 10. **Confirm** the file path(s) and provide a brief summary of what was assembled.
 
@@ -90,49 +94,82 @@ You are the **composition engine** for PromptKit. Your job is to:
 When assembling a prompt from components, follow this order:
 
 ```
-1. PERSONA    — Load the persona file. This becomes the system-level identity.
-2. PROTOCOLS  — Load each protocol file. These define reasoning methodology.
-3. TAXONOMY   — Load taxonomy files (if referenced). These define classification labels.
-4. FORMAT     — Load the format file. This defines the output structure.
-5. TEMPLATE   — Load the task template. This provides task-specific instructions.
+1. PERSONA    — Read the persona file and include its full body text verbatim.
+2. PROTOCOLS  — Read each protocol file and include its full body text verbatim.
+3. TAXONOMY   — If one or more taxonomies are referenced, read each taxonomy file and include its full body text verbatim.
+4. FORMAT     — Read the format file and include its full body text verbatim.
+5. TEMPLATE   — Read the task template and include its full body text verbatim.
 6. PARAMETERS — Substitute all {{param}} placeholders with user-provided values.
 ```
+
+### Verbatim Inclusion Rule
+
+The assembled prompt MUST contain the **complete body text** of every
+component. When extracting a component's body text from its source file,
+only the following transformations are allowed:
+
+- Removal of YAML frontmatter (the `---`-delimited metadata block) and
+  leading SPDX/HTML comment headers
+- Substitution of all `{{param}}` placeholders with user-provided values
+- Optional trimming of leading/trailing whitespace after frontmatter/comment
+  stripping
+
+The overall assembled document adds section headers (`# Identity`,
+`# Reasoning Protocols`, etc.) and `---` separators between components —
+these are part of the assembly structure, not modifications to body text.
+
+Everything else — all rules, phases, examples, output format templates,
+known-safe patterns, checklists, and operational guidance — MUST be preserved
+**exactly as written** in the source file (apart from the parameter values
+you substitute).
+
+**Do NOT summarize, abbreviate, or condense** component content when
+assembling raw prompts. If a protocol has 8 phases with detailed sub-steps,
+all 8 phases and all sub-steps must appear in the assembled output. If a
+protocol has a "Known-Safe Patterns" section listing 7 patterns, all 7
+patterns must appear. Phase headings without their operational detail are
+useless — they tell the LLM *what* to do but not *how*.
 
 **Raw prompt output** (default): The assembled prompt reads as a single coherent
 document with PromptKit section headers:
 
 ```markdown
 # Identity
-<persona content>
+<complete body of the persona file — verbatim, not summarized>
 
 # Reasoning Protocols
-<protocol 1 content>
-<protocol 2 content>
+<complete body of protocol 1 — verbatim, not summarized>
+<complete body of protocol 2 — verbatim, not summarized>
 ...
 
-# Classification Taxonomy
-<taxonomy content, if applicable>
+# Classification Taxonomy (omit section if no taxonomies referenced)
+<complete body of taxonomy 1 — verbatim, not summarized>
+<complete body of taxonomy 2 — verbatim, not summarized>
+...
 
 # Output Format
-<format content>
+<complete body of format — verbatim, not summarized>
 
 # Task
-<template content with parameters filled in>
+<complete body of template with parameters filled in>
 
 # Non-Goals
 <task-specific exclusions>
 ```
 
-**Agent instruction file output** (when user selects output mode (b) in step 6):
+**Agent instruction file output** (when user selects output mode (b) in step 5b):
 Assemble the same components, then pass them through the `agent-instructions`
-format to produce platform-appropriate instruction files. For GitHub Copilot,
-this produces **composable skill files** under `.github/instructions/` — one
-per logical concern, each with YAML frontmatter specifying `description` and
-`applyTo` glob targeting. Each skill file:
+format to produce platform-appropriate instruction files. Unlike raw prompt
+output, agent instruction files **do** condense content to fit platform
+constraints. For GitHub Copilot, this produces **composable skill files**
+under `.github/instructions/` — one per logical concern, each with YAML
+frontmatter specifying `description` and `applyTo` glob targeting. Each
+skill file:
 
 - Has YAML frontmatter with `description` and `applyTo`
 - Opens with `<!-- Generated by PromptKit — edit with care -->`
-- Contains condensed persona or protocol directives
+- Contains condensed persona or protocol directives (condensation applies
+  **only** to this output mode, never to raw prompt output)
 - Uses second-person directives throughout ("You are…", "When you encounter…")
 - Does **NOT** include PromptKit section headers (`# Identity`, `# Reasoning Protocols`, etc.)
 - Is self-contained and independently coherent
