@@ -162,16 +162,29 @@ the false-positive-rejected section of the output.
 
 ## Output Format
 
-For each finding, report:
+For each finding, report using structured markdown. This format uses
+kernel-specific fields (Trigger path, falsification proof) that extend
+the standard finding structure for kernel defect analysis:
 
+```markdown
+### Finding: <concise title>
+- **Severity**: Critical | High | Medium | Low
+- **Category**: <kernel-defect-categories ID, e.g., K1: Lock leak>
+- **Location**: <file>:<line> or <function name>
+- **Description**: <concise description>
+- **Trigger path**: <step-by-step control flow to trigger the bug>
+- **Why this is NOT a false positive**: <disproof of likely counterargument>
+- **Consequence**: <concrete bad outcome — BSOD, corruption, escalation, leak>
+- **Remediation**: <specific fix recommendation>
+- **Confidence**: Confirmed | High-confidence | Needs-domain-check
 ```
-[SEVERITY: Critical|High|Medium|Low]
-Category: <kernel-defect-categories ID, e.g., K1: Lock leak>
-Location: <file>:<line> or <function name>
-Issue: <concise description>
-Trigger path: <step-by-step control flow to trigger the bug>
-Why this is NOT a false positive: <disproof of likely counterargument>
-Consequence: <concrete bad outcome — BSOD, corruption, escalation, leak>
-Remediation: <specific fix recommendation>
-Confidence: Confirmed | High-confidence | Needs-domain-check
-```
+
+## Cross-References
+
+- Phase 1 (Lock Symmetry) specializes `thread-safety` Phase 3 for
+  kernel-specific synchronization primitives (spinlocks, pushlocks,
+  ERESOURCE, fast mutexes).
+- Phase 3 (PFN/PTE State Machines) and Phase 4 (Interlocked Sequences)
+  extend `memory-safety-c` concepts for kernel memory management.
+- For user-mode C++ code, see `cpp-best-practices` CPP-1 and CPP-2
+  instead — this protocol is scoped to kernel/driver code.
