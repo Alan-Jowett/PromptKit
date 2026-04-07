@@ -83,7 +83,10 @@ Format: | Risk ID | Description | Likelihood | Impact | Mitigation |>
 ## Formatting Rules
 
 - Use RFC 2119 keywords (MUST, SHOULD, MAY, etc.) consistently.
-  Do not use informal equivalents ("needs to," "has to," "can").
+  Use only the following keywords for normative language: MUST, MUST NOT,
+  SHALL, SHALL NOT, SHOULD, SHOULD NOT, MAY, REQUIRED, RECOMMENDED,
+  OPTIONAL. Do not use informal equivalents ("needs to," "has to,"
+  "can," "will").
 - Every requirement MUST have at least one acceptance criterion.
 - Requirements MUST be atomic — one testable behavior per requirement.
 - Cross-references between requirements use the requirement ID

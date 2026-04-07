@@ -110,7 +110,8 @@ requirements, design, and validation artifacts.
    - [ ] Every finding has a specific drift label (D1–D7)
    - [ ] Every finding cites specific document locations, not vague
          references
-   - [ ] Severity assignments follow the taxonomy's guidance
+   - [ ] Severity assignments follow the specification-drift taxonomy's
+         per-category severity guidance for the applicable D1–D7 labels
    - [ ] Findings are ordered by severity (Critical → High → Medium → Low),
          and within each severity level by the taxonomy's ranking criteria
    - [ ] D7 findings specify which sub-check failed (criterion-level
