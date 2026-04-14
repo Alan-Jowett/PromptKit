@@ -47,7 +47,10 @@ def parse_yaml_frontmatter(text: str) -> dict[str, object] | None:
             continue
         if in_protocols:
             if stripped.startswith("- "):
-                protocols.append(stripped[2:].strip().strip("'\""))
+                val = stripped[2:].strip().strip("'\"")
+                # Strip inline YAML comments only when '#' is preceded by whitespace.
+                val = re.split(r"\s+#", val, maxsplit=1)[0].strip().strip("'\"")
+                protocols.append(val)
             else:
                 in_protocols = False
     return {"protocols": protocols}
