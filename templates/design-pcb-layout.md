@@ -14,6 +14,7 @@ description: >
 persona: electrical-engineer
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
   - reasoning/pcb-layout-design
   - analysis/layout-design-review

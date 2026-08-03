@@ -277,14 +277,16 @@ protocols: [anti-hallucination, my-protocol]
 
 These must correspond. CI validates this.
 
-### Step 4: Run the CI check
+### Step 4: Run the CI checks
 
 ```bash
 python tests/validate-manifest.py
+python tests/validate-instruction-fidelity.py
 ```
 
 This verifies that every template's protocol list in the manifest matches
-its frontmatter.
+its frontmatter and that the universal instruction-fidelity guardrail is
+present where required.
 
 ## Quality Checklist Before Submitting
 
@@ -298,6 +300,7 @@ its frontmatter.
       structured rules (guardrails)
 - [ ] Templates have Non-Goals and Quality Checklist sections
 - [ ] `python tests/validate-manifest.py` passes
+- [ ] `python tests/validate-instruction-fidelity.py` passes
 - [ ] Assembled prompt produces coherent output when tested
 
 ## Example: Adding a New Template
@@ -317,7 +320,9 @@ Here's a concrete example of adding a `review-api` template:
      format: investigation-report
    ```
 
-3. **Run** `python tests/validate-manifest.py` to verify sync.
+3. **Run** `python tests/validate-manifest.py` and
+   `python tests/validate-instruction-fidelity.py` to verify sync and
+   universal guardrail coverage.
 
 4. **Test** with `npx promptkit assemble review-api -p …`
    to verify the assembled prompt is coherent.

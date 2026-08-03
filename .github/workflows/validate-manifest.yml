@@ -13,6 +13,7 @@ on:
       - 'taxonomies/**'
       - 'templates/**'
       - 'tests/validate-manifest.py'
+      - 'tests/validate-instruction-fidelity.py'
       - 'tests/validate-graph-integrity.py'
       - 'cli/**'
   pull_request:
@@ -24,6 +25,7 @@ on:
       - 'taxonomies/**'
       - 'templates/**'
       - 'tests/validate-manifest.py'
+      - 'tests/validate-instruction-fidelity.py'
       - 'tests/validate-graph-integrity.py'
       - 'cli/**'
 
@@ -58,6 +60,20 @@ jobs:
 
       - name: Validate graph integrity
         run: python tests/validate-graph-integrity.py
+
+  validate-instruction-fidelity:
+    name: Check instruction-fidelity coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Validate instruction-fidelity coverage
+        run: python tests/validate-instruction-fidelity.py
 
   cli-smoke-test:
     name: CLI smoke test (launch path)

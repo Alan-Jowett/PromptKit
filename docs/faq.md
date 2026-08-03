@@ -175,6 +175,7 @@ Separate Markdown files make components independently:
    protocols, and format
 2. Add an entry to `manifest.yaml`
 3. Run `python tests/validate-manifest.py`
+4. Run `python tests/validate-instruction-fidelity.py`
 4. Submit a PR
 
 See [Contributing Components](contributing-components.md) for full details.
@@ -215,3 +216,4 @@ Check that:
 1. The component file exists at the path specified in `manifest.yaml`
 2. The template's frontmatter references the correct component names
 3. `python tests/validate-manifest.py` passes
+4. `python tests/validate-instruction-fidelity.py` passes

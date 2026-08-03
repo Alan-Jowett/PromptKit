@@ -14,6 +14,7 @@ description: >
 persona: "{{persona}}"
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
   - reasoning/requirements-elicitation
   - reasoning/iterative-refinement

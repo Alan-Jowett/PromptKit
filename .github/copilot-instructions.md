@@ -92,18 +92,20 @@ adding or modifying any component:
 
 1. Update the component's YAML frontmatter
 2. Update `manifest.yaml` to match
-3. The CI check (`tests/validate-manifest.py`) validates that every
-   template's `protocols` list in the manifest matches its frontmatter
+3. The CI checks (`tests/validate-manifest.py` and
+   `tests/validate-instruction-fidelity.py`) validate manifest/template
+   protocol sync and universal guardrail coverage
 
 ## CI
 
 ```bash
-# Validate manifest ↔ template protocol sync (the only CI check)
+# Validate manifest ↔ template protocol sync and universal guardrails
 python tests/validate-manifest.py
+python tests/validate-instruction-fidelity.py
 ```
 
-Triggered on push/PR when `manifest.yaml`, `templates/**`, or
-`tests/validate-manifest.py` change.
+Triggered on push/PR when `manifest.yaml`, component files, or the
+validation scripts change.
 
 ## Testing
 

@@ -9,6 +9,7 @@ description: >
 persona: software-architect
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
 format: design-doc
 params:

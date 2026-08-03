@@ -11,6 +11,7 @@ description: >
 persona: mechanical-engineer
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
   - analysis/enclosure-design-review
 format: investigation-report

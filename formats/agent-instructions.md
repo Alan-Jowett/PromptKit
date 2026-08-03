@@ -47,7 +47,7 @@ recommended decomposition is:
 
 | Skill file | Contents | `applyTo` example |
 |------------|----------|-------------------|
-| `<persona>.instructions.md` | Condensed persona identity and guardrail protocols (anti-hallucination, self-verification) | `**` |
+| `<persona>.instructions.md` | Condensed persona identity and guardrail protocols (anti-hallucination, instruction-fidelity, self-verification) | `**` |
 | `<analysis-protocol>.instructions.md` | A single analysis protocol's checks and phases | Language-specific glob (e.g., `**/*.c`) |
 | `<reasoning-protocol>.instructions.md` | A single reasoning protocol | `**` or task-specific glob |
 
@@ -81,10 +81,27 @@ applyTo: '<glob pattern>'
 - Write in **second person** ("You are…", "When you encounter…").
 - Condense protocol phases into standing directives — preserve all specific
   checks but omit meta-commentary about protocol structure.
+- Preserve the `instruction-fidelity` execution contract verbatim in a
+  dedicated section titled `## Instruction Fidelity Contract`. Its
+  priority rules, ambiguity handling, phase discipline, forbidden
+  behaviors, and compliance check are **non-condensable**.
 - Do NOT include PromptKit-internal headers (`# Identity`,
   `# Reasoning Protocols`, `# Output Format`, etc.).
 - Each skill file must be **self-contained** — it should make sense when
   loaded independently by the agent runtime.
+
+## Non-Condensable Execution Contract
+
+If the assembled content includes the `instruction-fidelity` guardrail,
+the output file MUST copy that contract as a verbatim operating section.
+You may adapt surrounding headings to the target platform, but you MUST
+NOT paraphrase, compress, merge away, or partially restate the contract's:
+
+- instruction priority order
+- ambiguity escalation rule
+- phase / gate discipline
+- forbidden-behavior list
+- pre-finalization compliance check
 
 ### 3. File Content — Custom Agent (`.github/agents/*.agent.md`)
 
@@ -131,6 +148,8 @@ tools: ['<tool1>', '<tool2>']
 - Write in **second person** ("You are…", "Your task is to…").
 - Include the condensed PromptKit persona as the agent's identity.
 - Include protocol directives as the agent's operating instructions.
+- If `instruction-fidelity` is present, include its `## Instruction
+  Fidelity Contract` section verbatim.
 - Each agent file must be self-contained — it is loaded as the agent's
   complete system prompt.
 
@@ -185,6 +204,8 @@ description: '<one-line summary of what this skill does>'
 - Write in **second person** directed at the agent.
 - Include clear instructions for what the skill does, what inputs it
   expects, and what outputs it produces.
+- If `instruction-fidelity` is present, include its `## Instruction
+  Fidelity Contract` section verbatim near the top of the skill.
 - If the skill requires tool access (file editing, shell commands),
   document this clearly so the user understands what permissions are
   needed.

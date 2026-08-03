@@ -13,6 +13,7 @@ description: >
 persona: "{{persona}}"
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
   - guardrails/operational-constraints
   - guardrails/adversarial-falsification

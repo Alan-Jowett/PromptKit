@@ -11,6 +11,7 @@ description: >
 persona: systems-engineer
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
   - guardrails/adversarial-falsification
   - reasoning/exhaustive-path-tracing

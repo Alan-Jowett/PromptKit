@@ -412,6 +412,7 @@ personas, analysis protocols, and task templates.
 | Name | Description |
 |------|-------------|
 | `anti-hallucination` | Prevents fabrication, enforces epistemic labeling |
+| `instruction-fidelity` | Follow user intent and prompt constraints as written; ask on material ambiguity |
 | `self-verification` | Quality gate — LLM verifies its own output before finalizing |
 | `operational-constraints` | Scoping, tool usage, deterministic analysis, reproducibility |
 | `minimal-edit-discipline` | Minimal, type-preserving, encoding-safe code modifications |

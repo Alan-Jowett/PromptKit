@@ -12,6 +12,7 @@ description: >
 persona: protocol-architect
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
   - reasoning/protocol-validation-design
 format: protocol-validation-spec

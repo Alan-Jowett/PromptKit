@@ -13,6 +13,7 @@ description: >
 persona: specification-analyst
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
   - reasoning/prompt-portability-evaluation
 format: portability-report

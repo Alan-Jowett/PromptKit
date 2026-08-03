@@ -12,6 +12,7 @@ description: >
 persona: promptkit-contributor
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
   - reasoning/promptkit-design
 format: promptkit-pull-request

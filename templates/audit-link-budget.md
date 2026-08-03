@@ -10,6 +10,7 @@ description: >
 persona: rf-engineer
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
   - analysis/link-budget-audit
 format: investigation-report

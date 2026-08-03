@@ -11,6 +11,7 @@ description: >
 persona: workflow-arbiter
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
   - reasoning/workflow-arbitration
 format: multi-artifact

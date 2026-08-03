@@ -15,6 +15,7 @@ description: >
 persona: promptkit-contributor
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
   - reasoning/prompt-enhancement
 taxonomies:
