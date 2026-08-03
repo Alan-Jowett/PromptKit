@@ -176,7 +176,7 @@ Separate Markdown files make components independently:
 2. Add an entry to `manifest.yaml`
 3. Run `python tests/validate-manifest.py`
 4. Run `python tests/validate-instruction-fidelity.py`
-4. Submit a PR
+5. Submit a PR
 
 See [Contributing Components](contributing-components.md) for full details.
 
