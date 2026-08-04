@@ -11,6 +11,7 @@ description: >
 persona: specification-analyst
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
   - reasoning/interface-contract-audit
 format: investigation-report

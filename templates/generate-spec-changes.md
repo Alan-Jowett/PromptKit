@@ -11,6 +11,7 @@ description: >
 persona: "{{persona}}"
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
   - reasoning/change-propagation
 format: structured-patch

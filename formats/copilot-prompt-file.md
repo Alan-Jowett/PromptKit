@@ -26,6 +26,11 @@ example from the source components MUST appear in the output. The
 only transformations allowed are structural repackaging (section
 headings, frontmatter, variable syntax) — never content removal.
 
+Instruction-fidelity content is part of the non-negotiable execution
+contract. If the assembled prompt includes instruction-priority rules,
+ambiguity-escalation rules, approval gates, or STOP / WAIT directives,
+they MUST remain verbatim and keep the same normative force.
+
 Do NOT produce raw PromptKit output with assembly headers (`# Identity`,
 `# Reasoning Protocols`, etc.). Repackage into natural headings that
 read coherently as a standalone prompt file.
@@ -202,6 +207,9 @@ A numbered checklist of steps to activate the prompt file:
   at the agent ("You are…", "When you encounter…")
 - Preserve ALL numbered phases, specific checks, known-safe patterns,
   examples, and checklists from protocol sources
+- Preserve the `instruction-fidelity` contract verbatim when present.
+  Do NOT paraphrase or soften its ambiguity, phase-ordering, or
+  approval-gate rules.
 - Every major section listed in the body structure MUST be present,
   except for the following allowed omissions:
   - If the template declares `format: null` or omits the format, omit

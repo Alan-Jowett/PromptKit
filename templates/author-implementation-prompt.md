@@ -11,6 +11,7 @@ description: >
 persona: implementation-engineer
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
 format: requirements-doc
 params:

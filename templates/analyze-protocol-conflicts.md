@@ -11,6 +11,7 @@ description: >
 persona: protocol-architect
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
   - reasoning/protocol-conflict-analysis
 format: investigation-report

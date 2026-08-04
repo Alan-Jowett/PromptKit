@@ -11,6 +11,7 @@ description: >
 persona: plain-language-editor
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
   - guardrails/readability-gate
   - reasoning/readability-revision-workflow

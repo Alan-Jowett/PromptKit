@@ -130,6 +130,13 @@ protocols:
         Prevents fabrication. Enforces epistemic labeling (KNOWN/INFERRED/ASSUMED),
         uncertainty disclosure, and source attribution. Apply to all tasks.
 
+    - name: instruction-fidelity
+      path: protocols/guardrails/instruction-fidelity.md
+      description: >
+        Universal execution contract. Requires strict adherence to user
+        intent, prompt constraints, approval gates, and ambiguity escalation
+        instead of silent reinterpretation.
+
     - name: self-verification
       path: protocols/guardrails/self-verification.md
       description: >
@@ -1105,7 +1112,7 @@ templates:
         Single-shot generation. For complex/ambiguous projects, use
         interactive-design instead.
       persona: software-architect
-      protocols: [anti-hallucination, self-verification, requirements-elicitation]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, requirements-elicitation]
       format: requirements-doc
       pipeline_position: 1
 
@@ -1117,7 +1124,7 @@ templates:
         or system. Covers protocol/system description, network and software
         architecture, interfaces, and architectural implications.
       persona: software-architect
-      protocols: [anti-hallucination, self-verification]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification]
       format: architecture-spec
 
     - name: interactive-design
@@ -1127,7 +1134,7 @@ templates:
         and challenge before generating. Phase 2: generate when told.
         Phase 3: iterative refinement. Use for complex or ambiguous projects.
       persona: configurable
-      protocols: [anti-hallucination, self-verification, requirements-elicitation, iterative-refinement]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, requirements-elicitation, iterative-refinement]
       format: requirements-doc
 
     - name: author-north-star
@@ -1137,7 +1144,7 @@ templates:
         document. Evidence-grounded, section-by-section drafting with
         user review. Use for strategic direction documents.
       persona: software-architect
-      protocols: [anti-hallucination, self-verification]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification]
       format: north-star-document
 
     - name: author-design-doc
@@ -1145,7 +1152,7 @@ templates:
       description: >
         Generate a design document that addresses a requirements document.
       persona: software-architect
-      protocols: [anti-hallucination, self-verification]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification]
       format: design-doc
       pipeline_position: 2
       requires: requirements-document
@@ -1155,7 +1162,7 @@ templates:
       description: >
         Generate a validation plan covering all requirements.
       persona: systems-engineer
-      protocols: [anti-hallucination, self-verification]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification]
       format: validation-plan
       pipeline_position: 3
       requires: requirements-document
@@ -1167,7 +1174,7 @@ templates:
         source code. Analyzes implementation to extract behavioral contracts,
         API specifications, and invariants.
       persona: reverse-engineer
-      protocols: [anti-hallucination, self-verification, operational-constraints, requirements-from-implementation]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints, requirements-from-implementation]
       format: requirements-doc
 
     - name: audit-traceability
@@ -1177,7 +1184,7 @@ templates:
         specification drift. Cross-checks traceability, assumption
         consistency, constraint propagation, and coverage completeness.
       persona: specification-analyst
-      protocols: [anti-hallucination, self-verification, traceability-audit]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, traceability-audit]
       taxonomies: [specification-drift]
       format: investigation-report
       pipeline_position: 4
@@ -1190,7 +1197,7 @@ templates:
         conditions that agents should not re-investigate. Prevents
         repeated wasted effort on solved or pre-existing problems.
       persona: systems-engineer
-      protocols: [anti-hallucination, self-verification]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification]
 
     - name: audit-code-compliance
       path: templates/audit-code-compliance.md
@@ -1199,7 +1206,7 @@ templates:
         Detects unimplemented requirements, undocumented behavior, and
         constraint violations.
       persona: specification-analyst
-      protocols: [anti-hallucination, self-verification, operational-constraints, code-compliance-audit]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints, code-compliance-audit]
       taxonomies: [specification-drift]
       format: investigation-report
       requires: requirements-document
@@ -1211,7 +1218,7 @@ templates:
         document. Detects unimplemented test cases, missing acceptance
         criterion assertions, and assertion mismatches.
       persona: specification-analyst
-      protocols: [anti-hallucination, self-verification, operational-constraints, test-compliance-audit]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints, test-compliance-audit]
       taxonomies: [specification-drift]
       format: investigation-report
       requires: [requirements-document, validation-plan]
@@ -1224,7 +1231,7 @@ templates:
         discovery signal for missing validation and undocumented
         behavior.
       persona: specification-analyst
-      protocols: [anti-hallucination, self-verification, operational-constraints, coverage-gap-analysis]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints, coverage-gap-analysis]
       taxonomies: [specification-drift]
       format: investigation-report
       requires: [requirements-document, validation-plan]
@@ -1237,7 +1244,7 @@ templates:
         integration flows, interface contract mismatches, and untested
         integration paths.
       persona: specification-analyst
-      protocols: [anti-hallucination, self-verification, operational-constraints, integration-audit]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints, integration-audit]
       taxonomies: [specification-drift]
       format: investigation-report
       requires: requirements-document
@@ -1250,7 +1257,7 @@ templates:
         that could lead to invariant violations in any conforming
         implementation.
       persona: configurable
-      protocols: [anti-hallucination, self-verification, spec-invariant-audit]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, spec-invariant-audit]
       format: investigation-report
 
     - name: diff-specifications
@@ -1261,7 +1268,7 @@ templates:
         Modified, Clarified) and backward-compatibility impact. Produce
         migration guidance for implementers.
       persona: specification-analyst
-      protocols: [anti-hallucination, self-verification, spec-evolution-diff]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, spec-evolution-diff]
       format: investigation-report
 
     - name: author-interface-contract
@@ -1272,7 +1279,7 @@ templates:
         Produces per-resource-per-state guarantee and obligation
         matrices with invariants and failure modes.
       persona: systems-engineer
-      protocols: [anti-hallucination, self-verification]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification]
       format: interface-contract
       requires: requirements-document
 
@@ -1284,7 +1291,7 @@ templates:
         Checks matrix coverage, traceability, enforceability, and
         failure mode completeness.
       persona: specification-analyst
-      protocols: [anti-hallucination, self-verification, interface-contract-audit]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, interface-contract-audit]
       format: investigation-report
       requires: interface-contract
 
@@ -1297,7 +1304,7 @@ templates:
         verifies arithmetic, computes margins, and performs sensitivity
         analysis.
       persona: specification-analyst
-      protocols: [anti-hallucination, self-verification, quantitative-constraint-validation]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, quantitative-constraint-validation]
       format: investigation-report
 
     - name: lint-prompt
@@ -1308,7 +1315,7 @@ templates:
         behavior. Produces a determinism assessment report with
         per-section scoring and concrete rewrite suggestions.
       persona: specification-analyst
-      protocols: [anti-hallucination, self-verification, prompt-determinism-analysis]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, prompt-determinism-analysis]
       format: investigation-report
 
     - name: evaluate-prompt-portability
@@ -1320,7 +1327,7 @@ templates:
         cross-model consensus analysis, and produces a portability
         report with hardening recommendations.
       persona: specification-analyst
-      protocols: [anti-hallucination, self-verification, prompt-portability-evaluation]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, prompt-portability-evaluation]
       format: portability-report
 
     - name: revise-for-readability
@@ -1332,7 +1339,7 @@ templates:
         plain-language rules, re-measure, and produce a readability revision
         report.
       persona: plain-language-editor
-      protocols: [anti-hallucination, self-verification, readability-gate, readability-revision-workflow]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, readability-gate, readability-revision-workflow]
       format: readability-revision-report
 
   standards:
@@ -1343,7 +1350,7 @@ templates:
         Normalizes normative language, state machines, message formats,
         and cross-RFC dependencies into a requirements document.
       persona: specification-analyst
-      protocols: [anti-hallucination, self-verification, rfc-extraction]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, rfc-extraction]
       format: requirements-doc
 
     - name: reconcile-requirements
@@ -1353,7 +1360,7 @@ templates:
         (RFCs, implementations, specifications) into a unified spec.
         Classifies requirements by cross-source compatibility.
       persona: specification-analyst
-      protocols: [anti-hallucination, self-verification, requirements-reconciliation]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, requirements-reconciliation]
       format: requirements-doc
 
     - name: extract-invariants
@@ -1364,7 +1371,7 @@ templates:
         source code. Produces a dense, filtered subset of a full
         requirements extraction.
       persona: specification-analyst
-      protocols: [anti-hallucination, self-verification, invariant-extraction]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, invariant-extraction]
       format: requirements-doc
 
     - name: author-rfc
@@ -1374,7 +1381,7 @@ templates:
         vocabulary. Produces structurally valid xml2rfc XML from a
         project description, protocol design, or requirements document.
       persona: protocol-architect
-      protocols: [anti-hallucination, self-verification]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification]
       format: rfc-document
 
   presentations:
@@ -1388,7 +1395,7 @@ templates:
         presentation kit with slides, speaker notes, timeline, and
         optional demo plan and PDF export.
       persona: configurable
-      protocols: [anti-hallucination, self-verification, operational-constraints, presentation-design]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints, presentation-design]
       format: presentation-kit
 
   code-generation:
@@ -1399,7 +1406,7 @@ templates:
         spec-compliant implementation code. Pairs with
         audit-code-compliance for a generate/verify loop.
       persona: implementation-engineer
-      protocols: [anti-hallucination, self-verification]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification]
       format: requirements-doc
       requires: requirements-document
 
@@ -1410,7 +1417,7 @@ templates:
         spec-compliant test code. Pairs with audit-test-compliance
         for a generate/verify loop.
       persona: test-engineer
-      protocols: [anti-hallucination, self-verification]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification]
       format: validation-plan
       requires: [requirements-document, validation-plan]
 
@@ -1422,7 +1429,7 @@ templates:
         Designed for external orchestrators — PromptKit produces
         the prompts, not the runtime.
       persona: workflow-arbiter
-      protocols: [anti-hallucination, self-verification, workflow-arbitration]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, workflow-arbitration]
       format: multi-artifact
       requires: requirements-document
 
@@ -1433,7 +1440,7 @@ templates:
         Investigate a bug from a problem description. Apply root cause
         analysis and produce an investigation report.
       persona: systems-engineer
-      protocols: [anti-hallucination, self-verification, operational-constraints, root-cause-analysis]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints, root-cause-analysis]
       taxonomies: [stack-lifetime-hazards]
       format: investigation-report
 
@@ -1446,7 +1453,7 @@ templates:
         analysis, energy-vs-metric divergence, and cross-process
         amplification detection.
       persona: systems-engineer
-      protocols: [anti-hallucination, self-verification, operational-constraints, root-cause-analysis]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints, root-cause-analysis]
       format: investigation-report
 
     - name: find-and-fix-bugs
@@ -1456,7 +1463,7 @@ templates:
         of bugs, apply fixes, build to verify, iterate on errors, and
         produce a findings report.
       persona: systems-engineer
-      protocols: [anti-hallucination, self-verification, operational-constraints, minimal-edit-discipline]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints, minimal-edit-discipline]
       format: investigation-report
 
     - name: fix-compiler-warnings
@@ -1466,7 +1473,7 @@ templates:
         warnings from SARIF or compiler output, apply rule-specific
         fix patterns, build-verify each fix, and discover new patterns.
       persona: systems-engineer
-      protocols: [anti-hallucination, self-verification, operational-constraints, minimal-edit-discipline, compiler-diagnostics-cpp]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints, minimal-edit-discipline, compiler-diagnostics-cpp]
       format: structured-findings
 
     - name: investigate-security
@@ -1477,7 +1484,7 @@ templates:
         exhaustive path tracing selectively to parser/decoder functions
         that handle untrusted structured input.
       persona: security-auditor
-      protocols: [anti-hallucination, self-verification, operational-constraints, adversarial-falsification, security-vulnerability, exhaustive-path-tracing]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints, adversarial-falsification, security-vulnerability, exhaustive-path-tracing]
       taxonomies: [stack-lifetime-hazards]
       format: investigation-report
 
@@ -1488,7 +1495,7 @@ templates:
         inefficiencies and structural waste. Maps execution back to
         PromptKit components and produces optimization recommendations.
       persona: specification-analyst
-      protocols: [anti-hallucination, self-verification, session-profiling]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, session-profiling]
       format: investigation-report
 
     - name: classify-findings
@@ -1498,7 +1505,7 @@ templates:
         Three-way classification (Exact Match / Variant / New Pattern) with
         justification, confidence analysis, and catalog update proposals.
       persona: systems-engineer
-      protocols: [anti-hallucination, self-verification, finding-classification]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, finding-classification]
       format: structured-findings
 
   code-analysis:
@@ -1508,7 +1515,7 @@ templates:
         Thorough code review for correctness, safety, security,
         and maintainability. Supports additional analysis protocols.
       persona: systems-engineer
-      protocols: [anti-hallucination, self-verification, operational-constraints]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints]
       taxonomies: [stack-lifetime-hazards]
       format: investigation-report
 
@@ -1519,7 +1526,7 @@ templates:
         research-validated best practices and memory safety analysis.
         Optionally applies Win32 API or performance-critical C patterns.
       persona: systems-engineer
-      protocols: [anti-hallucination, self-verification, operational-constraints, cpp-best-practices, memory-safety-c]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints, cpp-best-practices, memory-safety-c]
       taxonomies: [cpp-review-patterns]
       format: investigation-report
 
@@ -1531,7 +1538,7 @@ templates:
         falsification discipline. Optionally applies kernel-specific
         analysis for OS code.
       persona: systems-engineer
-      protocols: [anti-hallucination, self-verification, adversarial-falsification, exhaustive-path-tracing]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, adversarial-falsification, exhaustive-path-tracing]
       taxonomies: [kernel-defect-categories]
       format: exhaustive-review-report
 
@@ -1543,7 +1550,7 @@ templates:
         (post inline review comments via GitHub API). Language-agnostic
         by default with optional language-specific focus.
       persona: systems-engineer
-      protocols: [anti-hallucination, self-verification, operational-constraints, human-voice-fidelity]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints, human-voice-fidelity]
       format: investigation-report
 
     - name: respond-to-pr-comments
@@ -1555,7 +1562,7 @@ templates:
         thread status via the platform's API). Auto-detects platform
         from the PR URL. Detects contradictory feedback across reviewers.
       persona: systems-engineer
-      protocols: [anti-hallucination, self-verification, operational-constraints, human-voice-fidelity]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints, human-voice-fidelity]
       format: pr-comment-responses
 
     - name: reconstruct-behavior
@@ -1566,7 +1573,7 @@ templates:
         implicit invariants from code, schematics, netlists,
         configurations, firmware images, or protocol captures.
       persona: reverse-engineer
-      protocols: [anti-hallucination, self-verification, operational-constraints, invariant-extraction]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints, invariant-extraction]
       format: behavioral-model
 
     - name: review-schematic
@@ -1577,7 +1584,7 @@ templates:
         bus integrity, protection circuits, power sequencing, passive
         components, and completeness.
       persona: electrical-engineer
-      protocols: [anti-hallucination, self-verification, schematic-compliance-audit]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, schematic-compliance-audit]
       format: investigation-report
 
     - name: validate-simulation
@@ -1588,7 +1595,7 @@ templates:
         extracts results, checks compliance, assesses corner-case
         coverage, and evaluates model validity.
       persona: electrical-engineer
-      protocols: [anti-hallucination, self-verification, simulation-validation]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, simulation-validation]
       format: investigation-report
 
     - name: review-bom
@@ -1599,7 +1606,7 @@ templates:
         package matches, cost compliance, sourcing risks, and
         completeness.
       persona: electrical-engineer
-      protocols: [anti-hallucination, self-verification, bom-consistency]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, bom-consistency]
       format: investigation-report
 
     - name: review-layout
@@ -1610,7 +1617,7 @@ templates:
         plane integrity, component placement, thermal design, and
         manufacturing constraints.
       persona: electrical-engineer
-      protocols: [anti-hallucination, self-verification, layout-design-review]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, layout-design-review]
       format: investigation-report
 
     - name: audit-link-budget
@@ -1620,7 +1627,7 @@ templates:
         model validity, receiver chain, margin adequacy, regulatory
         compliance, and sensitivity to environmental assumptions.
       persona: rf-engineer
-      protocols: [anti-hallucination, self-verification, link-budget-audit]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, link-budget-audit]
       format: investigation-report
 
     - name: review-enclosure
@@ -1631,7 +1638,7 @@ templates:
         compatibility, sensor access, manufacturing feasibility, and
         mounting provisions.
       persona: mechanical-engineer
-      protocols: [anti-hallucination, self-verification, enclosure-design-review]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, enclosure-design-review]
       format: investigation-report
 
   hardware-design:
@@ -1642,7 +1649,7 @@ templates:
         project requirements through component selection to a complete
         KiCad schematic with adversarial audits at each gate.
       persona: electrical-engineer
-      protocols: [anti-hallucination, self-verification, component-selection, component-selection-audit, schematic-design, schematic-compliance-audit]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, component-selection, component-selection-audit, schematic-design, schematic-compliance-audit]
 
     - name: design-pcb-layout
       path: templates/design-pcb-layout.md
@@ -1651,7 +1658,7 @@ templates:
         schematic through placement, automated routing, and DRC
         validation with layout-to-schematic feedback loop.
       persona: electrical-engineer
-      protocols: [anti-hallucination, self-verification, pcb-layout-design, layout-design-review]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, pcb-layout-design, layout-design-review]
 
     - name: emit-manufacturing-artifacts
       path: templates/emit-manufacturing-artifacts.md
@@ -1661,7 +1668,7 @@ templates:
         assembly drawings with fab-specific formatting for JLCPCB
         and PCBWay.
       persona: electrical-engineer
-      protocols: [anti-hallucination, self-verification, manufacturing-artifact-generation]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, manufacturing-artifact-generation]
 
     - name: hardware-design-workflow
       path: templates/hardware-design-workflow.md
@@ -1671,7 +1678,7 @@ templates:
         component selection, schematic, PCB layout, and manufacturing
         with adversarial audits and user review at every gate.
       persona: electrical-engineer
-      protocols: [anti-hallucination, self-verification, requirements-elicitation, component-selection, component-selection-audit, schematic-design, schematic-compliance-audit, pcb-layout-design, layout-design-review, manufacturing-artifact-generation]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, requirements-elicitation, component-selection, component-selection-audit, schematic-design, schematic-compliance-audit, pcb-layout-design, layout-design-review, manufacturing-artifact-generation]
 
   testing:
     - name: discover-tests-for-changes
@@ -1681,7 +1688,7 @@ templates:
         discover relevant tests. Finds test files near changed code,
         checks test configuration, and recommends execution strategy.
       persona: test-engineer
-      protocols: [anti-hallucination, self-verification, operational-constraints]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints]
       format: triage-report
 
     - name: scaffold-test-project
@@ -1691,7 +1698,7 @@ templates:
         class boilerplate, and test runner setup for a given framework
         and language.
       persona: test-engineer
-      protocols: [anti-hallucination, self-verification]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification]
       format: implementation-plan
 
   planning:
@@ -1703,7 +1710,7 @@ templates:
         modes: "implementation" (new feature/project) and "refactoring"
         (safe, incremental transformation of existing code).
       persona: software-architect
-      protocols: [anti-hallucination, self-verification]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification]
       format: implementation-plan
 
   agent-authoring:
@@ -1716,7 +1723,7 @@ templates:
         .github/agents/*.agent.md, or .github/skills/*/SKILL.md. Also
         supports Claude Code (CLAUDE.md) and Cursor (.cursorrules).
       persona: promptkit-contributor
-      protocols: [anti-hallucination, self-verification]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification]
       format: agent-instructions
 
     - name: author-session-handoff
@@ -1727,7 +1734,7 @@ templates:
         prioritized plan for the next session. Interactive workflow
         that gathers state and produces a handoff file.
       persona: systems-engineer
-      protocols: [anti-hallucination, self-verification, session-handoff]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, session-handoff]
 
     - name: enhance-prompt
       path: templates/enhance-prompt.md
@@ -1739,7 +1746,7 @@ templates:
         library, and proposes prioritized, category-classified enhancements.
         Supports document mode (plan) or action mode (apply in place).
       persona: promptkit-contributor
-      protocols: [anti-hallucination, self-verification, prompt-enhancement]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, prompt-enhancement]
       taxonomies: [enhancement-categories]
       format: enhancement-report
 
@@ -1750,7 +1757,7 @@ templates:
         Guide a contributor through designing and building new PromptKit
         components. Interactive workflow producing PR-ready files.
       persona: promptkit-contributor
-      protocols: [anti-hallucination, self-verification, promptkit-design]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, promptkit-design]
       format: promptkit-pull-request
 
     - name: decompose-prompt
@@ -1760,7 +1767,7 @@ templates:
         layers. Maps segments to existing components, flags improvements,
         and generates PR-ready files for novel components.
       persona: promptkit-contributor
-      protocols: [anti-hallucination, self-verification, prompt-decomposition]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, prompt-decomposition]
       format: promptkit-pull-request
 
     - name: audit-library-consistency
@@ -1771,7 +1778,7 @@ templates:
         duplication, template near-duplicates, terminology drift, and
         stale cross-references.
       persona: specification-analyst
-      protocols: [anti-hallucination, self-verification]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification]
       format: investigation-report
 
     - name: audit-library-health
@@ -1783,7 +1790,7 @@ templates:
         and language determinism analysis. Produces a unified
         investigation report with PR-ready remediation recommendations.
       persona: specification-analyst
-      protocols: [anti-hallucination, self-verification, operational-constraints, corpus-safety-audit, prompt-determinism-analysis]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints, corpus-safety-audit, prompt-determinism-analysis]
       format: investigation-report
 
   devops:
@@ -1793,7 +1800,7 @@ templates:
         Generate a production-ready CI/CD pipeline for a given application
         and target platform. Supports GitHub Actions, Azure DevOps, GitLab CI.
       persona: devops-engineer
-      protocols: [anti-hallucination, self-verification, devops-platform-analysis]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, devops-platform-analysis]
       format: pipeline-spec
 
     - name: triage-issues
@@ -1802,7 +1809,7 @@ templates:
         Triage and prioritize open issues or work items. Classify by
         priority and effort, identify patterns, recommend a workflow.
       persona: devops-engineer
-      protocols: [anti-hallucination, self-verification]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification]
       format: triage-report
 
     - name: triage-pull-requests
@@ -1811,7 +1818,7 @@ templates:
         Triage open pull requests to identify which need review, are stale,
         have conflicts, or are ready to merge. Prioritize review effort.
       persona: devops-engineer
-      protocols: [anti-hallucination, self-verification]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification]
       format: triage-report
 
     - name: root-cause-ci-failure
@@ -1820,7 +1827,7 @@ templates:
         Investigate a failing CI/CD pipeline run. Analyze logs, pipeline
         configuration, and platform behavior. Produce an investigation report.
       persona: devops-engineer
-      protocols: [anti-hallucination, self-verification, root-cause-analysis, devops-platform-analysis]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, root-cause-analysis, devops-platform-analysis]
       format: investigation-report
 
     - name: author-release
@@ -1829,7 +1836,7 @@ templates:
         Generate structured release notes from commits, PRs, and issues
         between two versions. Changelog, breaking changes, upgrade instructions.
       persona: devops-engineer
-      protocols: [anti-hallucination, self-verification]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification]
       format: release-notes
 
     - name: review-infrastructure
@@ -1838,7 +1845,7 @@ templates:
         Review infrastructure-as-code (Terraform, Bicep, ARM, Pulumi,
         CloudFormation) for correctness, security, and best practices.
       persona: devops-engineer
-      protocols: [anti-hallucination, self-verification, security-vulnerability]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, security-vulnerability]
       format: investigation-report
 
     - name: generate-commit-message
@@ -1848,7 +1855,7 @@ templates:
         Analyzes diffs to produce a Problem/Solution or Conventional
         Commits format message with file change summaries.
       persona: software-architect
-      protocols: [anti-hallucination, self-verification]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification]
 
   protocol-engineering:
     - name: evolve-protocol
@@ -1858,7 +1865,7 @@ templates:
         specification, works with the user to design modifications, traces
         impact, verifies consistency, and produces a protocol delta document.
       persona: protocol-architect
-      protocols: [anti-hallucination, self-verification, protocol-evolution]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, protocol-evolution]
       taxonomies: [protocol-change-categories]
       format: protocol-delta
 
@@ -1869,7 +1876,7 @@ templates:
         incompatible assumptions, and interoperability hazards. Produces
         an investigation report with resolution recommendations.
       persona: protocol-architect
-      protocols: [anti-hallucination, self-verification, protocol-conflict-analysis]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, protocol-conflict-analysis]
       format: investigation-report
 
     - name: author-protocol-validation
@@ -1879,7 +1886,7 @@ templates:
         Produces a test blueprint covering state machine coverage, message
         format conformance, error handling, and interoperability scenarios.
       persona: protocol-architect
-      protocols: [anti-hallucination, self-verification, protocol-validation-design]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, protocol-validation-design]
       format: protocol-validation-spec
 
   engineering-workflow:
@@ -1891,7 +1898,7 @@ templates:
         specification changes, implementation changes, adversarial
         audits, and deliverable creation. Domain-agnostic.
       persona: configurable
-      protocols: [anti-hallucination, self-verification, adversarial-falsification, operational-constraints, requirements-elicitation, iterative-refinement, change-propagation, traceability-audit, code-compliance-audit, test-compliance-audit]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, adversarial-falsification, operational-constraints, requirements-elicitation, iterative-refinement, change-propagation, traceability-audit, code-compliance-audit, test-compliance-audit]
       taxonomies: [specification-drift]
 
     - name: collaborate-requirements-change
@@ -1901,7 +1908,7 @@ templates:
         Work with the user to understand, refine, and produce a
         structured requirements patch. Domain-agnostic.
       persona: configurable
-      protocols: [anti-hallucination, self-verification, requirements-elicitation, iterative-refinement]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, requirements-elicitation, iterative-refinement]
       format: structured-patch
 
     - name: generate-spec-changes
@@ -1911,7 +1918,7 @@ templates:
         requirements patch. Propagates each requirement change to
         design sections and validation entries. Domain-agnostic.
       persona: configurable
-      protocols: [anti-hallucination, self-verification, change-propagation]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, change-propagation]
       format: structured-patch
 
     - name: generate-implementation-changes
@@ -1921,7 +1928,7 @@ templates:
         specification patch. Propagates design and validation changes
         to implementation artifacts. Domain-agnostic.
       persona: configurable
-      protocols: [anti-hallucination, self-verification, operational-constraints, change-propagation]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints, change-propagation]
       format: structured-patch
 
     - name: audit-spec-alignment
@@ -1931,7 +1938,7 @@ templates:
         Verifies requirements, design, and validation changes faithfully
         represent what the user asked for. Domain-agnostic.
       persona: specification-analyst
-      protocols: [anti-hallucination, self-verification, adversarial-falsification, traceability-audit]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, adversarial-falsification, traceability-audit]
       taxonomies: [specification-drift]
       format: investigation-report
 
@@ -1942,7 +1949,7 @@ templates:
         deltas. Verifies implementation and verification changes correctly
         realize the specification changes. Domain-agnostic.
       persona: specification-analyst
-      protocols: [anti-hallucination, self-verification, adversarial-falsification, operational-constraints, code-compliance-audit, test-compliance-audit]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, adversarial-falsification, operational-constraints, code-compliance-audit, test-compliance-audit]
       taxonomies: [specification-drift]
       format: investigation-report
 
@@ -1955,7 +1962,7 @@ templates:
         consistency, and produces PR-ready spec files. Domain-agnostic
         complement to engineering-workflow.
       persona: configurable
-      protocols: [anti-hallucination, self-verification, operational-constraints, adversarial-falsification, requirements-from-implementation, requirements-elicitation, iterative-refinement, traceability-audit]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, operational-constraints, adversarial-falsification, requirements-from-implementation, requirements-elicitation, iterative-refinement, traceability-audit]
       taxonomies: [specification-drift]
 
     - name: maintenance-workflow
@@ -1967,7 +1974,7 @@ templates:
         restores alignment. Domain-agnostic — completes the engineering
         lifecycle triad.
       persona: configurable
-      protocols: [anti-hallucination, self-verification, adversarial-falsification, operational-constraints, traceability-audit, code-compliance-audit, test-compliance-audit, change-propagation, iterative-refinement]
+      protocols: [anti-hallucination, instruction-fidelity, self-verification, adversarial-falsification, operational-constraints, traceability-audit, code-compliance-audit, test-compliance-audit, change-propagation, iterative-refinement]
       taxonomies: [specification-drift]
 
 pipelines:

@@ -10,6 +10,7 @@ description: >
 persona: devops-engineer
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
 format: triage-report
 params:

@@ -214,8 +214,9 @@ When adding or modifying any component:
 
 1. Update the component's YAML frontmatter
 2. Update `manifest.yaml` to match
-3. CI (`tests/validate-manifest.py`) validates that every template's
-   `protocols` list in the manifest matches its frontmatter
+3. CI validates both manifest/template protocol sync
+   (`tests/validate-manifest.py`) and universal instruction-fidelity
+   coverage (`tests/validate-instruction-fidelity.py`)
 
 ## The Assembly Engine
 
@@ -316,13 +317,15 @@ See [Pipeline Guide](pipeline-guide.md) for a detailed walkthrough.
 
 ## CI
 
-The only automated CI check is `tests/validate-manifest.py`, triggered on
-push/PR when `manifest.yaml`, `templates/**`, or the test script change. It
-validates that every template's `protocols` list in the manifest matches its
-frontmatter.
+The prompt-library validation workflow runs `tests/validate-manifest.py`
+and `tests/validate-instruction-fidelity.py` on push/PR when PromptKit
+components or validation scripts change. These checks validate manifest ↔
+template protocol sync and enforce the universal instruction-fidelity
+guardrail across templates and critical formats.
 
 ```bash
 python tests/validate-manifest.py
+python tests/validate-instruction-fidelity.py
 ```
 
 ## File Layout
@@ -345,7 +348,8 @@ promptkit/
 │   ├── lib/manifest.js       # Manifest parser
 │   └── lib/launch.js         # LLM CLI launcher
 ├── tests/
-│   ├── validate-manifest.py  # CI check
+│   ├── validate-manifest.py  # Manifest ↔ template protocol sync
+│   ├── validate-instruction-fidelity.py  # Universal guardrail coverage
 │   ├── references/           # Hand-crafted reference prompts
 │   └── generated/            # PromptKit-generated prompts (gitignored)
 └── docs/                     # Documentation and presentations

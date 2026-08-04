@@ -10,6 +10,7 @@ description: >
 persona: test-engineer
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
   - guardrails/operational-constraints
 format: triage-report

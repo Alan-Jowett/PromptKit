@@ -117,9 +117,9 @@ NOT mean "can optionally be added to". Use the following values:
 
 | Value | Meaning |
 |-------|---------|
-| `all` | Every template should apply this protocol (reserved for cross-cutting guardrails such as `anti-hallucination`). |
+| `all` | Every template should apply this protocol (reserved for cross-cutting guardrails such as `anti-hallucination` and `instruction-fidelity`). |
 | `[]` *(empty list)* | This protocol is intended for standalone / manual composition and is not automatically included by any template. Document this in the protocol file itself. |
-| `[template-a, template-b]` | These specific templates always include this protocol in their `protocols:` frontmatter. Keep this list in sync with the template definitions and their `protocols` entries in `manifest.yaml`. The CI check (`tests/validate-manifest.py`) currently validates only that `manifest.yaml` and template `protocols:` frontmatter match; it does not enforce `applicable_to` bidirectionally. |
+| `[template-a, template-b]` | These specific templates always include this protocol in their `protocols:` frontmatter. Keep this list in sync with the template definitions and their `protocols` entries in `manifest.yaml`. The CI checks (`tests/validate-manifest.py` and `tests/validate-instruction-fidelity.py`) validate manifest/frontmatter sync and required universal guardrails, but they do not enforce `applicable_to` bidirectionally. |
 
 **Optional protocols** — protocols a template can optionally include via
 `additional_protocols` in an assembled prompt — should NOT be listed in

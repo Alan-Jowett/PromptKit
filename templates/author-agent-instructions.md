@@ -13,6 +13,7 @@ description: >
 persona: promptkit-contributor
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
 format: agent-instructions
 params:
@@ -97,8 +98,8 @@ normative unless the user requests an alternative in Step 1):
 
 1. **Persona + guardrails skill** — One file containing:
    - Condensed persona identity (3–8 sentences)
-   - All guardrail protocols (anti-hallucination, self-verification,
-     operational-constraints)
+   - All guardrail protocols (anti-hallucination, instruction-fidelity,
+     self-verification, operational-constraints)
    - `applyTo: '**'` (applies to all files)
    - Filename: `<persona-name>.instructions.md`
 
@@ -185,6 +186,11 @@ Transform the loaded components into agent instruction prose:
    - Omit meta-commentary about the protocol's structure
    - Rewrite in second person ("When you encounter X, always Y")
    - If multiple protocols overlap, merge the redundant parts
+   - **Exception for `instruction-fidelity`**: preserve its execution
+     contract verbatim under a dedicated `## Instruction Fidelity
+     Contract` section. Do NOT merge away its priority order, ambiguity
+     escalation rule, phase/gate discipline, forbidden behaviors, or
+     compliance check.
    - **Exception for multi-phase workflows**: If the source template
      defines a multi-phase pipeline (multiple sequential phases where
      each phase's output feeds the next), do NOT condense away the

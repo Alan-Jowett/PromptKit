@@ -12,6 +12,7 @@ description: >
 persona: configurable
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
   - reasoning/spec-invariant-audit
 format: investigation-report

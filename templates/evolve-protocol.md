@@ -13,6 +13,7 @@ description: >
 persona: protocol-architect
 protocols:
   - guardrails/anti-hallucination
+  - guardrails/instruction-fidelity
   - guardrails/self-verification
   - reasoning/protocol-evolution
 taxonomies: [protocol-change-categories]
